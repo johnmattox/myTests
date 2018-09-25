@@ -1,34 +1,48 @@
-# -*- coding: utf-8 -*-
+# TODO: acho que podemos importar mais coisas
+from poli import SisPot, EletroMag, CalcNum, Eletronica, Controle
+from keras.models import Sequential
+from pandas import read_csv
+class politecnico:
 
-class polytechnic:
-    
-    def __init__(self,course,energy=100):
-        self.course = course
-        self.energy = energy
-        
-    def study(self):
-        self.energy -= 90
-        
-    def drink_coffee(self):
-        self.energy += 30
-        
-    def sleep(self):
-        self.energy = 100
-        
-tests = ['MecFlu','SisPot','EletroMag','Numérico','Eletrônica','Controle']
-hoursLeft = 120
-p = polytechnic('elétrica')
+    def __init__(self,curso,energia=100):
+        self.curso = curso
+        self.energia = energia
+        self.modelo = Sequential()
 
-for t in tests:
-    if p.energy <= 10:
-        if hoursLeft >= 48:
-            print('sleeping')
-            p.sleep()
-            hoursLeft -= 8
-        else:
-            while(p.energy <= 50):
-                print('drinking coffee')
-                p.drink_coffee()
-    p.study()
-    hoursLeft -= 16
-    print('energy: %d | Left: %d'%(p.energy,hoursLeft))
+    def estudar(self, train_data, validation_data):
+        self.modelo.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
+        self.modelo.fit(x='questoes', y='gabarito', epochs=3, batch_size=(lista.size()/4))
+        self.energia -= 90
+
+    def beber_cafe(self):
+        self.energia += 30
+        print('bebendo cafe')
+
+    def dormir(self):
+        self.energia = 100
+        print('zzZZ... zzZZ...')
+
+
+if __name__ == '__main__':
+
+    train_data = read_csv('listas_de_exercícios.csv')
+    validation_data = read_csv('provas_antigas.csv')
+
+    horasRestantes = 120
+    p = politecnico('elétrica')
+    while (horasRestantes > 0):
+
+        try:
+            p.estudar(train_data, validation_data)
+            horasRestantes -= 10
+        except OutOfEnergyError:
+            print('Você precisa descansar!')
+            if horasRestantes >= 24:
+                p.dormir()
+                horasRestantes -= 8
+            else:
+                p.beber_cafe()
+            print('Energia: %d | Tempo restante: %d horas'%(p.energia,horasRestantes))
+
+    # Hora do show
+    p.evaluate(test_data=['P1', 'P2', 'P3'])
