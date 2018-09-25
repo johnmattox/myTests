@@ -1,7 +1,10 @@
 # TODO: acho que podemos importar mais coisas
+# Talvez seja bom mesclar com outros cursos de engenharia (?)
+# Podemos importar as próprias ênfases da elétrica (PSI, PCS, PEA, PTC)...
 from poli import SisPot, EletroMag, CalcNum, Eletronica, Controle
 from keras.models import Sequential
 from pandas import read_csv
+# Perguntar para meninas do Turing se elas se sentem contempladas com "politacnico":
 class politecnico:
 
     def __init__(self,curso,energia=100):
@@ -26,6 +29,7 @@ class politecnico:
 if __name__ == '__main__':
 
     train_data = read_csv('listas_de_exercícios.csv')
+    # Gosto muito da idéia, talvez tenhamos que validar com o Itaú. validar... pegou essa ?!
     validation_data = read_csv('provas_antigas.csv')
 
     horasRestantes = 120
@@ -42,7 +46,8 @@ if __name__ == '__main__':
                 horasRestantes -= 8
             else:
                 p.beber_cafe()
-            print('Energia: %d | Tempo restante: %d horas'%(p.energia,horasRestantes))
+	        print('O quê? São 3 da manhã e eu ainda não sei nada?!')
+            #print('Energia: %d | Tempo restante: %d horas'%(p.energia,horasRestantes))
 
     # Hora do show
     p.evaluate(test_data=['P1', 'P2', 'P3'])
