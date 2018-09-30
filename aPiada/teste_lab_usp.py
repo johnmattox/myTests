@@ -4,26 +4,23 @@
 
 # J: Podemos importar as próprias ênfases da elétrica (PSI, PCS, PEA, PTC)...
 # L: E se pegarmos mais matérias comuns? Estatística, Probabilidade, AlgeLin...
-from poli import SisPot, EletroMag, CalcNum, Eletronica, Controle
+from poli import cursos_e_habilitações
 from keras.models import Sequential
 from pandas import read_csv
-# J: Perguntar para meninas do Turing se elas se sentem contempladas com "politecnico":
-# L: Podemos tentar algo como "class estudante_poli"?
-class politecnico:
+import numpy as np
+class estudante_poli:
 
     def __init__(self,curso,energia=100):
         self.curso = curso
         self.energia = energia
-        self.modelo = Sequential() # L: eu pensei em descrever melhor essa instancia de modelo,
-                                   #    mas acho que poderia tomar espaço demais...
+        self.modelo = Sequential() 
+                                   
     def estudar(self, train_data, validation_data):
         self.modelo.compile(loss='categorical_crossentropy', optimizer=sgd,
                             metrics=['accuracy'])
-
         self.modelo.fit(x=train_data['questoes'], y=train_data['gabaritos'],
                         validation_data=validation_data, epochs=3,
                         batch_size=(train_data.size()/5))
-
         self.energia -= 90
 
     def beber_cafe(self):
@@ -42,13 +39,15 @@ if __name__ == '__main__':
         train_data = read_csv('listas_de_exercícios.csv')
         validation_data = read_csv('provas_antigas.csv')
     except ProvaAntigaNotFoundError:
-        print('Então não tem prova no Moodle?!')
+        print('Não tem prova no Moodle?!')
         tudo_o_que_temos = read_csv('listas_de_exercícios.csv')
-        train_data      = tudo_o_que_temos[size(tudo_o_que_temos)*0.8 :]
-        validation_data = tudo_o_que_temos[: size(tudo_o_que_temos)*0.8]
+	train_data = tudo_o_que_temos.loc[: int(np.floor(tudo_o_que_temos.shape[0]*0.7)-1)]
+	validation_data = tudo_o_que_temos.loc[int(np.floor(tudo_o_que_temos.shape[0]*0.7)):]
+        #train_data      = tudo_o_que_temos[size(tudo_o_que_temos)*0.8 :]
+        #validation_data = tudo_o_que_temos[: size(tudo_o_que_temos)*0.8]
 
     horasRestantes = 120
-    p = politecnico('elétrica')
+    p = estudante_poli('elétrica')
     while (horasRestantes > 0):
         try:
             p.estudar(train_data, validation_data)
