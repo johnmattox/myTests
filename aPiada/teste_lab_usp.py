@@ -1,20 +1,29 @@
 # TODO: acho que podemos importar mais coisas
-# Talvez seja bom mesclar com outros cursos de engenharia (?)
-# Podemos importar as próprias ênfases da elétrica (PSI, PCS, PEA, PTC)...
+# J: Talvez seja bom mesclar com outros cursos de engenharia (?)
+# L: Pensei nisso. talvez "from poli import Mecanica, Minas, Civil, ...", etc
+
+# J: Podemos importar as próprias ênfases da elétrica (PSI, PCS, PEA, PTC)...
+# L: E se pegarmos mais matérias comuns? Estatística, Probabilidade, AlgeLin...
 from poli import SisPot, EletroMag, CalcNum, Eletronica, Controle
 from keras.models import Sequential
 from pandas import read_csv
-# Perguntar para meninas do Turing se elas se sentem contempladas com "politacnico":
+# J: Perguntar para meninas do Turing se elas se sentem contempladas com "politecnico":
+# L: Podemos tentar algo como "class estudante_poli"?
 class politecnico:
 
     def __init__(self,curso,energia=100):
         self.curso = curso
         self.energia = energia
-        self.modelo = Sequential()
-
+        self.modelo = Sequential() # L: eu pensei em descrever melhor essa instancia de modelo,
+                                   #    mas acho que poderia tomar espaço demais...
     def estudar(self, train_data, validation_data):
-        self.modelo.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
-        self.modelo.fit(x='questoes', y='gabarito', epochs=3, batch_size=(lista.size()/4))
+        self.modelo.compile(loss='categorical_crossentropy', optimizer=sgd,
+                            metrics=['accuracy'])
+
+        self.modelo.fit(x=train_data['questoes'], y=train_data['gabaritos'],
+                        validation_data=validation_data, epochs=3,
+                        batch_size=(train_data.size()/5))
+
         self.energia -= 90
 
     def beber_cafe(self):
@@ -27,15 +36,20 @@ class politecnico:
 
 
 if __name__ == '__main__':
-
-    train_data = read_csv('listas_de_exercícios.csv')
-    # Gosto muito da idéia, talvez tenhamos que validar com o Itaú. validar... pegou essa ?!
-    validation_data = read_csv('provas_antigas.csv')
+    # J: Gosto muito da idéia, talvez tenhamos que validar com o Itaú. validar... pegou essa ?!
+    # L: hahahahah, entendo... e que tal...
+    try:
+        train_data = read_csv('listas_de_exercícios.csv')
+        validation_data = read_csv('provas_antigas.csv')
+    except ProvaAntigaNotFoundError:
+        print('Então não tem prova no Moodle?!')
+        tudo_o_que_temos = read_csv('listas_de_exercícios.csv')
+        train_data      = tudo_o_que_temos[size(tudo_o_que_temos)*0.8 :]
+        validation_data = tudo_o_que_temos[: size(tudo_o_que_temos)*0.8]
 
     horasRestantes = 120
     p = politecnico('elétrica')
     while (horasRestantes > 0):
-
         try:
             p.estudar(train_data, validation_data)
             horasRestantes -= 10
@@ -46,7 +60,7 @@ if __name__ == '__main__':
                 horasRestantes -= 8
             else:
                 p.beber_cafe()
-	        print('O quê? São 3 da manhã e eu ainda não sei nada?!')
+	        print('O quê? São 3 da manhã e eu ainda não sei nada?!') # L: HAHAHAHAHAHAHAHAHAHAHAHAHA
             #print('Energia: %d | Tempo restante: %d horas'%(p.energia,horasRestantes))
 
     # Hora do show
