@@ -1,9 +1,3 @@
-# TODO: acho que podemos importar mais coisas
-# J: Talvez seja bom mesclar com outros cursos de engenharia (?)
-# L: Pensei nisso. talvez "from poli import Mecanica, Minas, Civil, ...", etc
-
-# J: Podemos importar as próprias ênfases da elétrica (PSI, PCS, PEA, PTC)...
-# L: E se pegarmos mais matérias comuns? Estatística, Probabilidade, AlgeLin...
 from poli import cursos_e_habilitações
 from keras.models import Sequential
 from pandas import read_csv
@@ -31,10 +25,7 @@ class estudante_poli:
         self.energia = 100
         print('zzZZ... zzZZ...')
 
-
 if __name__ == '__main__':
-    # J: Gosto muito da idéia, talvez tenhamos que validar com o Itaú. validar... pegou essa ?!
-    # L: hahahahah, entendo... e que tal...
     try:
         train_data = read_csv('listas_de_exercícios.csv')
         validation_data = read_csv('provas_antigas.csv')
@@ -59,8 +50,7 @@ if __name__ == '__main__':
                 horasRestantes -= 8
             else:
                 p.beber_cafe()
-	        print('O quê? São 3 da manhã e eu ainda não sei nada?!') # L: HAHAHAHAHAHAHAHAHAHAHAHAHA
-            #print('Energia: %d | Tempo restante: %d horas'%(p.energia,horasRestantes))
+	        print('O quê? São 3 da manhã e eu ainda não sei nada?!')
 
     # Hora do show
     p.evaluate(test_data=['P1', 'P2', 'P3'])
